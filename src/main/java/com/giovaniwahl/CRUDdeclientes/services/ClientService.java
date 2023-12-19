@@ -52,6 +52,7 @@ public class ClientService {
             throw new ResourceNotFoundException("Resource not found!");
         }
     }
+    @Transactional
     public void delete(long id){
         if (!clientRepository.existsById(id)){
             throw new ResourceNotFoundException("Resource not found !");
