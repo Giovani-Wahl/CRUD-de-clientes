@@ -3,7 +3,11 @@ package com.giovaniwahl.CRUDdeclientes.services;
 import com.giovaniwahl.CRUDdeclientes.dtos.ClientDTO;
 import com.giovaniwahl.CRUDdeclientes.entities.Client;
 import com.giovaniwahl.CRUDdeclientes.repositories.ClientRepository;
+import com.giovaniwahl.CRUDdeclientes.services.exceptions.DatabaseException;
+import com.giovaniwahl.CRUDdeclientes.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -19,7 +23,8 @@ public class ClientService {
 
     @Transactional(readOnly = true)
     public ClientDTO findById(Long id){
-        Client client = clientRepository.findById(id).orElseThrow();
+        Client client = clientRepository.findById(id).orElseThrow(
+                ()->new ResourceNotFoundException("Id Not Found."));
         return new ClientDTO(client);
     }
     @Transactional(readOnly = true)
@@ -41,7 +46,7 @@ public class ClientService {
             Client client = clientRepository.getReferenceById(id);
             copyDtoToEntity(clientDTO,client);
             client = clientRepository.save(client);
-            return new ClientDTO(client)
+            return new ClientDTO(client);
         }
         catch (EntityNotFoundException e){
             throw new ResourceNotFoundException("Resource not found!");
