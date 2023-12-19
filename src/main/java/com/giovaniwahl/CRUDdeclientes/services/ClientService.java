@@ -3,11 +3,9 @@ package com.giovaniwahl.CRUDdeclientes.services;
 import com.giovaniwahl.CRUDdeclientes.dtos.ClientDTO;
 import com.giovaniwahl.CRUDdeclientes.entities.Client;
 import com.giovaniwahl.CRUDdeclientes.repositories.ClientRepository;
-import com.giovaniwahl.CRUDdeclientes.services.exceptions.DatabaseException;
 import com.giovaniwahl.CRUDdeclientes.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -57,12 +55,7 @@ public class ClientService {
         if (!clientRepository.existsById(id)){
             throw new ResourceNotFoundException("Resource not found !");
         }
-        try {
-            clientRepository.deleteById(id);
-        }
-        catch (DataIntegrityViolationException e){
-            throw new DatabaseException("Referential integrity failure !");
-        }
+       clientRepository.deleteById(id);
     }
     private void copyDtoToEntity(ClientDTO clientDTO, Client client){
         client.setName(clientDTO.getName());
