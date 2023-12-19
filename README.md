@@ -10,13 +10,13 @@ CRUD REST
 Clonar o projeto
 
 ```bash
-  git clone https://github.com/Giovani-Wahl/EventManager.git
+  git clone https://github.com/Giovani-Wahl/CRUD-de-clientes.git
 ```
 
 Entre no diretório do projeto
 
 ```bash
-  cd event
+  cd CRUD-de-clientes
 ```
 Abra o pŕojeto em seu IDE e execute
 ## 
